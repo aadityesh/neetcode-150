@@ -9,7 +9,7 @@ public:
         int n = a.size();
         int m = b.size();
 
-        vector<int> ans;
+        /*vector<int> ans;
         unordered_map<int, int> umap;
 
         for (int i = 0; i < m; i++) {
@@ -27,6 +27,28 @@ public:
         for (int i = 0; i < n; i++) {
             ans.push_back(umap[a[i]]);
         }
+        return ans;
+        */
+
+        stack<int> st;
+        unordered_map<int, int> umap;
+
+        for (int i = m - 1; i >= 0; i--) {
+
+            while (!st.empty() && b[i] >= st.top()) {
+                st.pop();
+            }
+
+            int res = (st.empty()) ? -1 : st.top();
+            umap[b[i]] = res;
+
+            st.push(b[i]);
+        }
+
+        vector<int> ans;
+        for (auto i : a)
+            ans.push_back(umap[i]);
+
         return ans;
     }
 };
