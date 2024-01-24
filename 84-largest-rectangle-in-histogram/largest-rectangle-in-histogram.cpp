@@ -89,12 +89,15 @@ public:
             }
 
             ans = max(ans, curr);
-        }*/
+        }
+        */
+
+        // Optimal
+
         vector<int> ps = previousElem(a);
         vector<int> ns = nextElem(a);
 
-        for(int i = 0; i < n; i++) {
-
+        for (int i = 0; i < n; i++) {
             int height = a[i];
             int currArea = (ns[i] - ps[i] - 1) * height;
             ans = max(ans, currArea);
