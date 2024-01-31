@@ -1,37 +1,38 @@
 class Solution {
 public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+    double findMedianSortedArrays(vector<int>& a, vector<int>& b) {
 
-        int n = nums1.size();
-        int m = nums2.size();
+        // int n = nums1.size();
+        // int m = nums2.size();
 
-        double ans = 0;
-        // if(n <= 0) return nums2[0];
-        // if(m <= 0) return nums1[0];
+        // Brute
 
-        vector<int> merge;
-        for (auto i : nums1)
-            merge.push_back(i);
+        //size of two given arrays:
+    int n1 = a.size(), n2 = b.size();
 
-        for (auto i : nums2)
-            merge.push_back(i);
+    vector<int> arr3;
+    //apply the merge step:
+    int i = 0, j = 0;
+    while (i < n1 && j < n2) {
+        if (a[i] < b[j]) arr3.push_back(a[i++]);
+        else arr3.push_back(b[j++]);
+    }
 
-        sort(merge.begin(), merge.end());
+    //copy the left-out elements:
+    while (i < n1) arr3.push_back(a[i++]);
+    while (j < n2) arr3.push_back(b[j++]);
 
-        int q = merge.size();
+    //Find the median:
+    int n = n1 + n2;
+    if (n % 2 == 1) {
+        return (double)arr3[n / 2];
+    }
 
-        if (q == 1)
-            return merge[0];
+    double median = ((double)arr3[n / 2] + (double)arr3[(n / 2) - 1]) / 2.0;
+    return median;
+      
+        
 
-        else if (q == 2)
-            return double(merge[0] + merge[1]) / 2.0;
-
-        else if (q % 2 != 0)
-            return double(merge[q / 2]);
-
-        else {
-            int idx = q / 2;
-            return double(merge[idx] + merge[idx - 1]) / 2.0;
-        }
+        
     }
 };
