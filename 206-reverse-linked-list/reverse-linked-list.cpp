@@ -20,7 +20,7 @@ public:
 
     ListNode* reverseList(ListNode* head) {
 
-        vector<int> a;
+        /*vector<int> a;
         ListNode* temp = head;
   
         while (temp != NULL) {
@@ -39,7 +39,18 @@ public:
         for (int i = n - 1; i >= 0; i--) {
             head->val = a[i];
             head = head->next;
+        }*/
+
+        ListNode * next, * prev = NULL;
+        ListNode *curr = head;
+
+        while(curr) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;            
         }
-        return curr;
+
+        return prev;
     }
 };
