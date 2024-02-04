@@ -10,6 +10,7 @@
  */
 class Solution {
 public:
+    // Brute
     int sizeOfList(ListNode* head) {
 
         int cnt = 1;
@@ -25,37 +26,59 @@ public:
 
     ListNode* removeNthFromEnd(ListNode* head, int n) {
 
-        ListNode* curr = head;
-        ListNode* prev = NULL;
-        int size = sizeOfList(head);
-        // cout << move << endl;
-        // cout << size << endl;
-        int move = sizeOfList(head) - n;
-        if (n == 1 && size == 1) {
-            head = NULL;
+        // Brute
+        /*
+            ListNode* curr = head;
+            ListNode* prev = NULL;
+            int size = sizeOfList(head);
+
+            int move = sizeOfList(head) - n;
+
+            if (n == 1 && size == 1) {
+                head = NULL;
+                return head;
+            }
+
+            if (n == 1 && size == 2) {
+                head->next = NULL;
+                return head;
+            }
+
+            if (move == 0) {
+                head = head->next;
+                return head;
+            }
+
+            while (move-- && curr != NULL) {
+                prev = curr;
+                curr = curr->next;
+            }
+
+            if (curr == NULL)
+                prev->next = NULL;
+            else
+                prev->next = curr->next;
+
             return head;
+        }*/
+
+        ListNode* curr = new ListNode();
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while (n--)
+            fast = fast->next;
+        
+        if(fast == NULL)  
+            return head->next;
+
+        while (fast != NULL && fast->next != NULL) {
+            curr = slow;
+            slow = slow->next;
+            fast = fast->next;
         }
 
-        if (n == 1 && size == 2) {
-            head->next = NULL;
-            return head;
-        }
-
-        if (move == 0) {
-            head = head->next;
-            return head;
-        }
-
-        while (move-- && curr != NULL) {
-            prev = curr;
-            curr = curr->next;
-        }
-
-        if (curr == NULL)
-            prev->next = NULL;
-        else
-            prev->next = curr->next;
-
+        slow->next = slow->next->next;
         return head;
     }
 };
