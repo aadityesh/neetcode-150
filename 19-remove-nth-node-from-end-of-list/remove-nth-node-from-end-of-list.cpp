@@ -61,8 +61,10 @@ public:
 
             return head;
         }*/
-
-        ListNode* curr = new ListNode();
+        
+        // Optimal
+        
+        // ListNode* curr = new ListNode();
         ListNode* slow = head;
         ListNode* fast = head;
 
@@ -73,7 +75,7 @@ public:
             return head->next;
 
         while (fast != NULL && fast->next != NULL) {
-            curr = slow;
+            // curr = slow;
             slow = slow->next;
             fast = fast->next;
         }
