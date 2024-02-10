@@ -18,11 +18,25 @@ public:
     //     head = temp;
     // }
 
+    ListNode* reverseNode(ListNode*& head) {
+
+         if(head == NULL || head->next == NULL)
+            return head;
+        
+        ListNode* newHead = reverseNode(head->next);
+        ListNode* front = head->next;
+        front->next = head;
+        head->next = NULL;
+
+        return newHead;
+
+    }
+
     ListNode* reverseList(ListNode* head) {
 
         /*vector<int> a;
         ListNode* temp = head;
-  
+
         while (temp != NULL) {
             a.push_back(temp->val);
             temp = temp->next;
@@ -30,7 +44,7 @@ public:
 
         for(auto i : a) cout << i << endl;
 
-        
+
         int n = a.size();
 
         ListNode* curr = head;
@@ -40,7 +54,9 @@ public:
             head->val = a[i];
             head = head->next;
         }*/
+        /*
 
+        // Optimal - Iterative
         ListNode * next, * prev = NULL;
         ListNode *curr = head;
 
@@ -48,9 +64,17 @@ public:
             next = curr->next;
             curr->next = prev;
             prev = curr;
-            curr = next;            
+            curr = next;
         }
 
         return prev;
+
+        */
+
+        // Optimal - Recursive
+      
+
+       return reverseNode(head);
+
     }
 };
