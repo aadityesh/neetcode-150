@@ -4,20 +4,21 @@ public:
 
         int n = s.length();
         int res = 0;
-        int start = 0;
-
+        int left = 0;
+        int right = 0;
+        // [ l ... r ] -> hold substr w/o repeating characs
         unordered_set<char> uset;
-        for (int end = 0; end < n; end++) {
-
-            while (uset.find(s[end]) != uset.end()) {
-                uset.erase(s[start]);
-                start++;
+        while (right < n) {
+            while (uset.find(s[right]) != uset.end()) {
+                uset.erase(s[left]);
+                left++;
             }
 
-            uset.insert(s[end]);
-            res = max(res, end - start + 1);
+            res = max(res, right - left + 1);
+            uset.insert(s[right++]);
         }
 
         return res;
     }
-};
+}
+;
