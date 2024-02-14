@@ -1,5 +1,7 @@
 class Solution {
 public:
+    // pref, suff -> Brute (min(L, R) - height[i])
+    /*
     vector<int> pref(vector<int> a) {
 
         int n = a.size();
@@ -29,10 +31,12 @@ public:
 
         return p;
     }
+    */
 
     int trap(vector<int>& height) {
 
         int n = height.size();
+        /*
         vector<int> prefix = pref(height);
         vector<int> suffix = suff(height);
         int res = 0;
@@ -41,9 +45,32 @@ public:
             int curr = min(prefix[i], suffix[i]) - height[i];
             if(curr >= 0) res += curr;
 
-            // cout << res << endl;
+            cout << curr << endl;
         }
 
+        return res;
+        */
+
+        int res = 0;
+        int left = 0;
+        int right = n - 1;
+        int leftMax = height[0];
+        int rightMax = height[n - 1];
+
+        while (left < right) {
+
+            if(leftMax <= rightMax) {
+                left++;
+                leftMax = max(leftMax, height[left]);
+                res += (leftMax - height[left]);
+
+            } else {
+                right--;
+                rightMax = max(rightMax, height[right]);
+                res += (rightMax - height[right]);
+            }
+
+        }
         return res;
     }
 };
