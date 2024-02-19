@@ -13,7 +13,6 @@ class Solution {
 public:
     ListNode* merged = new ListNode();
     ListNode* tail = merged;
-    int cnt = 0;
 
     ListNode* merge(ListNode* list1, ListNode* list2) {
 
@@ -25,55 +24,25 @@ public:
             ListNode* curr = new ListNode();
 
             if (a->val <= b->val) {
-                if (cnt == 0) {
-                    tail->val = a->val;
-                    cnt++;
-                } else {
-                    curr->val = a->val;
-                    tail->next = curr;
-                    tail = curr;
-                }
+                tail->next = a;
+                tail = tail->next;
                 a = a->next;
             } else {
-
-                if (cnt == 0) {
-                    tail->val = b->val;
-                    cnt++;
-                } else {
-                    curr->val = b->val;
-                    tail->next = curr;
-                    tail = curr;
-                }
-
+                tail->next = b;
+                tail = tail->next;
                 b = b->next;
             }
-            cout << "one" << endl;
         }
 
-        while (a != NULL) {
-
-            ListNode* curr = new ListNode();
-
-            curr->val = a->val;
-            tail->next = curr;
-            tail = curr;
-
-            a = a->next;
-            cout << "two" << endl;
+        if (a != NULL) {
+            tail->next = a;
         }
 
-        while (b != NULL) {
-
-            ListNode* curr = new ListNode();
-            curr->val = b->val;
-            tail->next = curr;
-            tail = curr;
-
-            b = b->next;
-            cout << "three" << endl;
+        if (b != NULL) {
+            tail->next = b;
         }
 
-        return merged;
+        return merged->next;
     }
 
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
