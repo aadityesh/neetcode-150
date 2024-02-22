@@ -12,44 +12,8 @@ class Solution {
 public:
     void reorderList(ListNode*& head) {
 
-        // vector<int> a;
-        // ListNode* temp = head;
-        // while (temp != NULL) {
-        //     a.push_back(temp->val);
-        //     temp = temp->next;
-        // }
-
-        // int i = 0;
-        // int j = a.size() - 1;
-
-        // ListNode* newList = new ListNode(0);
-        // ListNode* tail = newList;
-
-        // while (i <= j) {
-
-        //     if (i < j && i != 0) {
-        //         ListNode* newNode = new ListNode(a[j]);
-        //         tail->next = newNode;
-        //         tail = newNode;
-        //         j--;
-        //     }
-
-        //     if (i <= j) {
-        //         ListNode* newNode = new ListNode(a[i]);
-        //         tail->next = newNode;
-        //         tail = newNode;
-        //         i++;
-        //     }
-        // }
-
-        // // ListNode* p = newList;
-        // // while(p != NULL) {
-        // //     cout << p->val << " ";
-        // //     p = p->next;
-        // // }
-        // cout << head->val << endl;
-        // head->next = newList->next->next;
-
+        // Brute
+        /*
         stack<ListNode*> st;
         ListNode* curr = head;
 
@@ -72,6 +36,40 @@ public:
             curr->next = next;
             curr = curr->next;
         }
-        curr->next = NULL;
+        curr->next = NULL;*/
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        // Reverse
+        ListNode* prev = nullptr;
+        ListNode* next = nullptr;
+        ListNode* curr = slow;
+        while (curr) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        // Merge
+        ListNode* n1 = head;
+        ListNode* n2 = prev;
+
+        ListNode* tmp = nullptr;
+        while (n2->next) {
+            tmp = n1->next;
+            n1->next = n2;
+            n1 = tmp;
+
+            tmp = n2->next;
+            n2->next = n1;
+            n2 = tmp;
+        }
     }
 };
