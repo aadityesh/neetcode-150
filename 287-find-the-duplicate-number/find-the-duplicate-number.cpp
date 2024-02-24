@@ -1,32 +1,40 @@
 class Solution {
 public:
-    int findDuplicate(vector<int>& nums) {
+    int findDuplicate(vector<int>& a) {
 
         // Brute
         /*
-        unordered_map<int, int> umap;
-        for (auto i : nums) {
-            umap[i]++;
-            if (umap[i] > 1)
-                return i;
+        int n = a.size();
+        int res = -1;
+        for (int i = 0; i < n; i++) {
+            int cnt = 0;
+            for (int j = 0; j < n; j++) {
+                if (a[i] == a[j] && i != j)
+                    cnt++;
+            }
+
+            if (cnt > 0) {
+                res = a[i];
+                break;
+            }
         }
-        return -1;
+
+        return res;
         */
 
         // Optimal
+        int slow = a[0];
+        int fast = a[0];
 
-        int slow = nums[0];
-        int fast = nums[nums[0]];
+        do {
+            slow = a[slow];
+            fast = a[a[fast]];
+        } while (slow != fast);
 
+        slow = a[0];
         while (slow != fast) {
-            slow = nums[slow];
-            fast = nums[nums[fast]];
-        }
-
-        slow = 0;
-        while(slow != fast) {
-            slow = nums[slow];
-            fast = nums[fast];
+            slow = a[slow];
+            fast = a[fast];
         }
 
         return slow;
