@@ -91,11 +91,13 @@ public:
                 
                 break;
             }
-
+            
+            // Break the section of the list
             ListNode* next = kth_node->next;
             kth_node->next = nullptr;
             reverseLL(temp);
 
+            // Reassign head for the first iteration.
             if (temp == head) {
                 head = kth_node;
             } else {
