@@ -21,9 +21,9 @@ public:
 
     ListNode* findKth(ListNode* begin, int k) {
         k -= 1;
-        while (k > 0 && begin) {
+        while (k-- && begin) {
             begin = begin->next;
-            k--;
+            // k--;
         }
         return begin;
     }
