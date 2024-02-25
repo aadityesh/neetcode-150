@@ -28,21 +28,20 @@ public:
         return begin;
     }
 
-    ListNode* reverseLL(ListNode* head) {
+    void reverseLL(ListNode* head) {
 
         ListNode* curr = head;
         ListNode* prev = nullptr;
         ListNode* next = nullptr;
 
         while (curr) {
-
             next = curr->next;
             curr->next = prev;
             prev = curr;
             curr = next;
         }
 
-        return prev;
+        // return prev;
     }
 
     ListNode* reverseKGroup(ListNode* head, int k) {
@@ -83,18 +82,20 @@ public:
         while (temp) {
 
             kth_node = findKth(temp, k);
-            
+
             if (kth_node == NULL) {
 
                 if (prev)
                     prev->next = temp;
-                
+
                 break;
             }
-            
+
             // Break the section of the list
             ListNode* next = kth_node->next;
             kth_node->next = nullptr;
+
+            // sending the head of the section of length K
             reverseLL(temp);
 
             // Reassign head for the first iteration.
@@ -107,6 +108,7 @@ public:
             prev = temp;
             temp = next;
         }
+
         return head;
     }
 };
