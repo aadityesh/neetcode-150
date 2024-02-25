@@ -26,6 +26,7 @@ public:
         return NULL;
         */
 
+        // Optimal
         // 2 * (dis of slow) = dis of fast
         ListNode* slow = head;
         ListNode* fast = head;
