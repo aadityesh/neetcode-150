@@ -5,23 +5,23 @@ public:
         if (x == 0)
             return 0;
 
-        int i = 1;
-        int j = x;
+        int left = 1;
+        int right = x;
         int mid = 0;
 
-        while (i <= j) {
-            mid = i + ((j - i) / 2); // ensure theres no overflow
+        while (left <= right) {
+            mid = left + ((right - left) / 2); // ensure theres no overflow
 
-            if (mid <= (x / mid) && (mid + 1) > (x / (mid + 1))) // 1...mid... x
+            if (mid == (x / mid)) // 1...mid... x
                 return mid;
 
             else if (mid > (x / mid))
-                j = mid - 1;
+                right = mid - 1;
 
             else
-                i = mid + 1;
+                left = mid + 1;
         }
 
-        return j;
+        return right;
     }
 };
