@@ -9,17 +9,45 @@
  * };
  */
 class Solution {
-public:
     vector<int> ans;
 
+public:
+    /*
     void reverseArr(vector<int>& a, int start, int end) {
         while (start <= end) {
             swap(a[start++], a[end--]);
         }
+    }*/
+
+    ListNode* findKth(ListNode* begin, int k) {
+        k -= 1;
+        while (k > 0 && begin) {
+            begin = begin->next;
+            k--;
+        }
+        return begin;
+    }
+
+    ListNode* reverseLL(ListNode* head) {
+
+        ListNode* curr = head;
+        ListNode* prev = nullptr;
+        ListNode* next = nullptr;
+
+        while (curr) {
+
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
     }
 
     ListNode* reverseKGroup(ListNode* head, int k) {
 
+        /*
         ListNode* temp = head;
         while (temp != NULL) {
             ans.push_back(temp->val);
@@ -45,5 +73,38 @@ public:
         }
 
         return temp->next;
+        */
+
+        ListNode* temp = head;
+        ListNode* kth_node = nullptr;
+        ListNode* prev = nullptr;
+        // ListNode* next = nullptr;
+
+        while (temp) {
+
+            kth_node = findKth(temp, k);
+            
+            if (kth_node == NULL) {
+
+                if (prev)
+                    prev->next = temp;
+                
+                break;
+            }
+
+            ListNode* next = kth_node->next;
+            kth_node->next = nullptr;
+            reverseLL(temp);
+
+            if (temp == head) {
+                head = kth_node;
+            } else {
+                prev->next = kth_node;
+            }
+
+            prev = temp;
+            temp = next;
+        }
+        return head;
     }
 };
