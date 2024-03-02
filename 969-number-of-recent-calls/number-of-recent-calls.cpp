@@ -1,26 +1,18 @@
 class RecentCounter {
-    int cnt;
-    vector<int> requests;
-
 public:
-    RecentCounter() { cnt = 0; }
-
+    queue<int> q;
+    RecentCounter() {
+        
+    }
+    
     int ping(int t) {
 
-        int a = t - 3000;
-        int b = t;
-        int c = 0;
+        q.push(t);
+        while(q.front() < t - 3000) 
+            q.pop();
 
-        requests.push_back(t);
-
-        for (auto i : requests) {
-            if (i >= a && i <= b) {
-                // cout << i << " ";
-                c++;
-            }
-        }
-
-        return c;
+        return q.size();
+        
     }
 };
 
