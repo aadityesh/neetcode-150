@@ -1,14 +1,25 @@
+#include <bits/stdc++.h>
 class Solution {
 public:
-    int maxFrequency(vector<int>& A, int k) {
-        sort(begin(A), end(A));
-        long i = 0, N = A.size(), ans = 1, sum = 0;
-        for (int j = 0; j < N; ++j) {
-            sum += A[j];
-            while ((j - i + 1) * A[j] - sum > k)
-                sum -= A[i++];
-            ans = max(ans, j - i + 1);
+    int maxFrequency(vector<int>& a, int k) {
+
+        int n = a.size();
+        long long left = 0;
+        long long right = 0;
+        long long res = 0;
+        long long sum = 0;
+        long long multi = 1;
+
+        sort(a.begin(), a.end());
+        while (right < n) {
+            sum += a[right];
+            while ((a[right] * (right - left + 1)) - sum > k) {
+                sum -= a[left];
+                left++;
+            }
+            res = max(res, right - left + 1);
+            right++;
         }
-        return ans;
+        return res;
     }
 };
