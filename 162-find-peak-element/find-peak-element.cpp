@@ -18,7 +18,7 @@ public:
             if (a[mid - 1] < a[mid] && a[mid] > a[mid + 1])
                 return mid;
 
-            if (a[mid - 1] < a[mid])
+            if (a[mid - 1] <= a[mid])
                 low = mid + 1;
 
             else
