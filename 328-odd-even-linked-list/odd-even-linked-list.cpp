@@ -1,3 +1,4 @@
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -44,6 +45,7 @@ public:
          */
 
         // Better
+        /*
         if (head == NULL || head->next == NULL)
             return head;
 
@@ -73,6 +75,22 @@ public:
             curr = curr->next;
         }
 
+        return head;
+        */
+        if (head == NULL || head->next == NULL)
+            return head;
+
+        ListNode* odd = head;
+        ListNode* even = head->next;
+        ListNode* oddHead = odd;
+        ListNode* evenHead = even;
+        while (even && even->next) {
+            odd->next = odd->next->next;
+            even->next = even->next->next;
+            odd = odd->next;
+            even = even->next;
+        }
+        odd->next = evenHead;
         return head;
     }
 };
