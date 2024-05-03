@@ -15,7 +15,7 @@ public:
         int n = s.length();
 
         int res = 0;
-        while (i < n) {
+        /*while (i < n) {
 
             if (s[i] == 'I' && s[i + 1] == 'V') {
                 res += 4;
@@ -56,7 +56,18 @@ public:
                 res += umap[s[i]];
                 i++;
             }
+        }*/
+
+        while(i < n) {
+
+            if(umap[s[i]] < umap[s[i+1]]) {
+                res -= umap[s[i]];
+            } else {
+                res += umap[s[i]];
+            }
+            i++;
         }
+
         return res;
     }
 };
