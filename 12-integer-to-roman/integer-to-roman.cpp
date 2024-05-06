@@ -16,8 +16,8 @@ public:
                 int count = floor(num / it.first);
                 while (count--)
                     res += it.second;
+                num = num % it.first;
             }
-            num = num % it.first;
         }
 
         return res;
