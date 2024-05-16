@@ -12,28 +12,43 @@ class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
 
-        ListNode* curr = head;
-        int flag = 1;
+        // ListNode* curr = head;
+        // int flag = 1;
 
-        ListNode* newOdd = new ListNode(-1);
-        ListNode* tailOdd = newOdd;
+        // ListNode* newOdd = new ListNode(-1);
+        // ListNode* tailOdd = newOdd;
 
-        ListNode* newEven = new ListNode(-1);
-        ListNode* tailEven = newEven;
+        // ListNode* newEven = new ListNode(-1);
+        // ListNode* tailEven = newEven;
 
-        while (curr) {
-            if (flag % 2) {
-                tailOdd->next = new ListNode(curr->val);
-                tailOdd = tailOdd->next;
-            } else {
-                tailEven->next = new ListNode(curr->val);
-                tailEven = tailEven->next;
-            }
-            curr = curr->next;
-            flag++;
+        // while (curr) {
+        //     if (flag % 2) {
+        //         tailOdd->next = new ListNode(curr->val);
+        //         tailOdd = tailOdd->next;
+        //     } else {
+        //         tailEven->next = new ListNode(curr->val);
+        //         tailEven = tailEven->next;
+        //     }
+        //     curr = curr->next;
+        //     flag++;
+        // }
+
+        // tailOdd->next = newEven->next;
+        // return newOdd->next;
+
+        if(head == NULL) return head;
+
+        ListNode* odd = head;
+        ListNode* even = head->next;
+        ListNode* evenHead = even;
+
+        while (even && even->next) {
+            odd->next = odd->next->next;
+            even->next = even->next->next;
+            odd = odd->next; even = even->next;
         }
+        odd->next = evenHead;
+        return head;
 
-        tailOdd->next = newEven->next;
-        return newOdd->next;
     }
 };
