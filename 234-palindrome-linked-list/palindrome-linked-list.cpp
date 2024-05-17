@@ -10,20 +10,56 @@
  */
 class Solution {
 public:
+    ListNode* reverse(ListNode*& head) {
+
+        ListNode* prev = NULL;
+        ListNode* next = NULL;
+        ListNode* curr = head;
+
+        while (curr) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        // aabaa
+
+        // curr = prev;
+        // while(curr) {
+        //     cout << curr->val << " " << endl;
+        //     curr = curr->next;
+        // }
+
+        return prev;
+    }
+
     bool isPalindrome(ListNode* head) {
-        string s = "";
-        ListNode* temp = head;
-        while(temp) {
-            s += temp->val;
-            temp = temp->next;
+
+        // tortoise-hare method to find the middle
+        // reverse using mid
+        // traverse from L-R and R-L
+        // reverse using mid
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
 
-        int i = 0;
-        int j = s.length() - 1;
-        while(i < j) {
-            if(s[i] != s[j]) return false;
-                i++;j--;
+        ListNode* reverseHead = reverse(slow);
+
+        ListNode* curr1 = head;
+        ListNode* curr2 = reverseHead;
+
+        while (curr2) {
+            if (curr1->val != curr2->val)
+                return false;
+            curr1 = curr1->next;
+            curr2 = curr2->next;
         }
+        reverse(slow);
         return true;
     }
 };
