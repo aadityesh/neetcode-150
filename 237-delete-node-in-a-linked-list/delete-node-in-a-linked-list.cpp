@@ -17,5 +17,6 @@ public:
             curr = curr->next;
         }
         prev->next = NULL;
+        delete(curr);
     }
 };
