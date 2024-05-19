@@ -13,8 +13,9 @@ public:
     ListNode* middleNode(ListNode* head) {
 
         ListNode* slow = head;
+        ListNode* fast = head;
+
         if(!head->next) return slow;
-        ListNode* fast = head->next->next;
 
         while(fast && fast->next) {
             slow = slow->next;
@@ -22,7 +23,7 @@ public:
             // cout << slow->val << " " << fast->val << endl; 
         }
 
-        return slow->next;
+        return slow;
 
 
 
