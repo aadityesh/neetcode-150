@@ -63,6 +63,8 @@ public:
 
     ListNode* rotateRight(ListNode* head, int k) {
 
+        /*
+
         int n = length(head);
         if(n > 0) k = k % n;
 
@@ -90,6 +92,31 @@ public:
             if(prev)
                 prev->next = kthNode;
         }
+        return head;
+
+        */
+        if (head == NULL || head->next == NULL || k <= 0)
+            return head;
+
+        int n = 1;
+        ListNode* tail = head;
+        while (tail->next) {
+            n++;
+            tail = tail->next;
+        }
+         if(n > 0) k = k % n;
+
+        ListNode* temp = head;
+        int times = n - k - 1;
+        while (times--) {
+            temp = temp->next;
+        }
+
+        tail->next = head;
+
+        head = temp->next;
+        temp->next = NULL;
+
         return head;
     }
 };
