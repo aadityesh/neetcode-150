@@ -1,112 +1,71 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
-    vector<int> ans;
 
 public:
-    /*
-    void reverseArr(vector<int>& a, int start, int end) {
-        while (start <= end) {
-            swap(a[start++], a[end--]);
-        }
-    }*/
-
-    ListNode* findKth(ListNode* begin, int k) {
-        k -= 1;
-        while (k-- && begin) {
-            begin = begin->next;
-            // k--;
-        }
-        return begin;
-    }
-
-    void reverseLL(ListNode* head) {
-
-        ListNode* curr = head;
+    void reverse(ListNode*& head) {
         ListNode* prev = nullptr;
-        ListNode* next = nullptr;
+        ListNode* curr = head;
 
         while (curr) {
-            next = curr->next;
+            ListNode* next = curr->next;
             curr->next = prev;
             prev = curr;
             curr = next;
         }
+    }
 
-        // return prev;
+    ListNode* kth(ListNode* head, int k) {
+
+        k = k - 1;
+        ListNode* curr = head;
+        while (k-- && curr) {
+            curr = curr->next;
+        }
+
+        return curr;
     }
 
     ListNode* reverseKGroup(ListNode* head, int k) {
 
-        /*
-        ListNode* temp = head;
-        while (temp != NULL) {
-            ans.push_back(temp->val);
-            temp = temp->next;
-        }
+        if (k == 1)
+            return head;
 
-        int n = ans.size();
-        int i = 0;
+        // int len = length(head);
+        // int count = len / k;
 
-        int times = n / k;
-        while (times--) {
-            reverseArr(ans, i, i + k - 1);
-            i = i + k;
-        }
+        ListNode* prev = NULL;
+        ListNode* nextNode = NULL;
+        ListNode* kthNode = NULL;
 
-        temp = new ListNode();
-        ListNode* tail = temp;
+        ListNode* curr = head;
 
-        for (auto i : ans) {
-            ListNode* curr = new ListNode(i);
-            tail->next = curr;
-            tail = curr;
-        }
+        while(curr) {
 
-        return temp->next;
-        */
+            kthNode = kth(curr, k);
 
-        ListNode* temp = head;
-        ListNode* kth_node = nullptr;
-        ListNode* prev = nullptr;
-        // ListNode* next = nullptr;
-
-        while (temp) {
-
-            kth_node = findKth(temp, k);
-
-            if (kth_node == NULL) {
-
-                if (prev)
-                    prev->next = temp;
-
+            if(kthNode == NULL) {
+                if(prev) prev->next = curr;
                 break;
             }
+            else {
 
-            // Break the section of the list
-            ListNode* next = kth_node->next;
-            kth_node->next = nullptr;
+                nextNode =  kthNode->next;
+                kthNode->next = NULL;
+                reverse(curr);
 
-            // sending the head of the section of length K
-            reverseLL(temp);
+                if(curr == head) {
+                    head = kthNode;
+                }
 
-            // Reassign head for the first iteration.
-            if (temp == head) {
-                head = kth_node;
-            } else {
-                prev->next = kth_node;
+                else {
+                    prev->next = kthNode;
+                }
+
+                prev = curr;
+                curr = nextNode;
+
             }
 
-            prev = temp;
-            temp = next;
+
         }
 
         return head;
