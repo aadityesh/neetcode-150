@@ -41,8 +41,8 @@ public:
             Node* cpy = curr->next;
             if (curr->random)
                 cpy->random = curr->random->next;
-            else
-                cpy->random = NULL;
+            // else
+            //     cpy->random = NULL;
 
             curr = curr->next->next;
 
