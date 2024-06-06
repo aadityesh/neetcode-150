@@ -1,41 +1,33 @@
 class Solution {
+    long atoi(string s, int sign, int i, long result) {
+        if(sign*result>=INT_MAX){
+            return INT_MAX;
+        }
+        if(sign*result<=INT_MIN){
+            return INT_MIN;
+        }
+        if(i>=s.size()|| s[i]<'0' || s[i]>'9'){
+            return sign*result;
+        }
+        
+       
+        result=atoi(s,sign,i+1,(result*10+(s[i]-'0')));
+        
+        return result;
+    }
+
 public:
     int myAtoi(string s) {
-
-        int n = s.length();
-        int i = 0;
-        bool neg = false;
-        long res = 0;
-
+        
+        int i = 0, n = s.size(), sign = 1;
         while (i < n && s[i] == ' ')
-            i++;
-        if (s[i] == '-') {
-            neg = true;
-            i++;
-        } else if (s[i] == '+')
-            i++;
+            ++i;
 
-        while (i < n) {
+        if (s[i] == '-')
+            sign = -1, ++i;
+        else if (s[i] == '+')
+            ++i;
 
-            int value = s[i] - '0';
-
-            if (value >= 0 && value <= 9) {
-
-                res = res * 10 + value;
-                i++;
-
-                if (res > INT_MAX && neg)
-                    return INT_MIN;
-                else if (res > INT_MAX && !neg)
-                    return INT_MAX;
-
-            } else
-                break;
-        }
-
-        if (neg)
-            return -(int)res;
-
-        return (int)res;
+        return atoi(s, sign, i, 0);
     }
 };
