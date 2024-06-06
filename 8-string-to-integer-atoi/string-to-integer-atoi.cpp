@@ -9,9 +9,9 @@ public:
         if ((res > (INT_MAX / 10)) || (res * 10 > (INT_MAX - integer)))
             return neg > 0 ? INT_MAX : INT_MIN;
 
-        res = res * 10 + integer;
+        res = recursiveAtoi(s, i + 1, neg, ((res * 10) + integer));
 
-        return recursiveAtoi(s, i + 1, neg, res);
+        return res;
     }
     int myAtoi(string s) {
 
