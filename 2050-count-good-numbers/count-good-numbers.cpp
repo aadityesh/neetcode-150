@@ -1,15 +1,17 @@
 #define MOD 1000000007
 class Solution {
 public:
-    long long int power(long long int x, long long int n) {
-        x = x % MOD;
+    long power(long x, long n) {
+        // x = x % MOD;
         if (n == 0)
             return 1;
 
+        long temp = power(x, n / 2);
+
         if (n & 1) {
-            return (x * power((x * x) % MOD, n / 2)) % MOD;
+            return (x * temp * temp) % MOD;
         } else {
-            return (power((x * x) % MOD, n / 2)) % MOD;
+            return (temp * temp) % MOD;
         }
     }
     int countGoodNumbers(long long n) {
@@ -27,8 +29,8 @@ public:
         return res;*/
 
         // Optimal
-        long long int countOfEven = n / 2;
-        long long int countOfOdd  = n - countOfEven;
+        long countOfEven = n / 2;
+        long countOfOdd = n - countOfEven;
 
         return ((power(4, countOfEven) % MOD) * (power(5, countOfOdd) % MOD)) %
                MOD;
