@@ -1,30 +1,32 @@
 class TimeMap {
 
-    map<string, vector<pair<string, int>>> omap;
+    unordered_map<string, vector<pair<string, int>>> umap;
 
 public:
     TimeMap() {}
 
     void set(string key, string value, int timestamp) {
-        omap[key].push_back(make_pair(value, timestamp));
+        umap[key].push_back({value, timestamp});
     }
 
     string get(string key, int timestamp) {
 
-        if (omap.find(key) == omap.end())
+        if (umap.find(key) == umap.end())
             return "";
 
         int low = 0;
-        int high = omap[key].size() - 1;
-        string ans = "";
+        int high = umap[key].size() - 1;
 
+        string ans = "";
         while (low <= high) {
 
             int mid = (low + high) / 2;
-            if (omap[key][mid].second <= timestamp) {
-                ans = omap[key][mid].first;
+            if (umap[key][mid].second <= timestamp) {
+                ans = umap[key][mid].first;
                 low = mid + 1;
-            } else {
+            }
+
+            else {
                 high = mid - 1;
             }
         }
