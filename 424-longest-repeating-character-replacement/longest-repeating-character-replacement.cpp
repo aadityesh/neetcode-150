@@ -10,29 +10,52 @@ public:
     }
     int characterReplacement(string s, int k) {
 
-        vector<int> hashA(26, 0);
-
         int n = s.length();
-        int L = 0;
-        int R = 0;
 
         int length = 0;
         int maxf = 0;
 
-        while (R < n) {
+        for (int L = 0; L < n; L++) {
 
-            hashA[s[R] - 'A']++;
-            maxf = max(maxf, hashA[s[R]-'A']);
-            
-            while ((R - L + 1) - maxf > k) {
-                hashA[s[L] - 'A']--;
-                L++;
+            vector<int> hashA(26, 0);
+
+            for (int R = L; R < n; R++) {
+
+                hashA[s[R] - 'A']++;
+                maxf = max(maxf, hashA[s[R] - 'A']);
+
+                if ((R - L + 1) - maxf <= k) {
+                    length = max(length, (R - L + 1));
+                } else
+                    break;
             }
-
-            length = max(length, R - L + 1);
-            R++;
         }
 
+        /*
+         vector<int> hashA(26, 0);
+
+        int n = s.length();
+
+        int length = 0;
+        int maxf = 0;
+        int L = 0;
+        int R = 0;
+
+        while (R < n) {
+
+             hashA[s[R] - 'A']++;
+             maxf = max(maxf, hashA[s[R]-'A']);
+
+             while ((R - L + 1) - maxf > k) {
+                 hashA[s[L] - 'A']--;
+                 L++;
+             }
+
+             length = max(length, R - L + 1);
+             R++;
+         }
+
+        */
         return length;
     }
 };
