@@ -1,16 +1,16 @@
 class Solution {
 public:
-    int helper(unordered_map<char, int>& umap) {
+    int helper(vector<int>& hash) {
         int length = 0;
-        for (auto it : umap) {
-            length = max(length, it.second);
+        for (int it : hash) {
+            length = max(length, it);
         }
 
         return length;
     }
     int characterReplacement(string s, int k) {
 
-        unordered_map<char, int> umap;
+        vector<int> hashA(26, 0);
 
         int n = s.length();
         int L = 0;
@@ -21,12 +21,12 @@ public:
 
         while (R < n) {
 
-            umap[s[R]]++;
-            
-            maxf = helper(umap);
+            hashA[s[R] - 'A']++;
+
+            maxf = helper(hashA);
 
             while ((R - L + 1) - maxf > k) {
-                umap[s[L]]--;
+                hashA[s[L] - 'A']--;
                 L++;
             }
 
