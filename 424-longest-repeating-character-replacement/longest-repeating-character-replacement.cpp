@@ -22,9 +22,8 @@ public:
         while (R < n) {
 
             hashA[s[R] - 'A']++;
-
-            maxf = helper(hashA);
-
+            maxf = max(maxf, hashA[s[R]-'A']);
+            
             while ((R - L + 1) - maxf > k) {
                 hashA[s[L] - 'A']--;
                 L++;
