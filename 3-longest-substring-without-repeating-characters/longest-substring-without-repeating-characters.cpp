@@ -2,58 +2,24 @@ class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
 
+        unordered_set<int> hashSet;
+
         int n = s.length();
-        // int res = 0;
+        int L = 0;
+        int R = 0;
 
-        // Brute
-        /*
-            for (int i = 0; i < n; i++) {
-                unordered_set<char> uset;
-                for (int j = i; j < n; j++) {
-                    uset.insert(s[j]);
-                    // check unique
-                    if(uset.size() == j - i + 1) {
-                        res = max(res, j - i + 1);
-                    }
-                }
-            }
-        */
-
-        // Optimal
-
-        // int left = 0;
-        // int right = 0;
-        // // [ l ... r ] -> hold substr w/o repeating characs
-        // unordered_set<char> uset;
-        // while (right < n) {
-        //     while (uset.find(s[right]) != uset.end()) {
-        //         uset.erase(s[left]);
-        //         left++;
-        //     }
-
-        //     res = max(res, right - left + 1);
-        //     uset.insert(s[right++]);
-        // }
-
-        // return res;
-
-        int i = 0;
-        int j = 0;
-
-        unordered_map<char, int> umap;
         int res = 0;
 
-        while (j < n) {
+        while (R < n) {
 
-            umap[s[j]]++;
-
-            while (umap[s[j]] > 1) {
-                umap[s[i]]--;
-                i++;
+            while (!hashSet.empty() && hashSet.find(s[R]) != hashSet.end()) {
+                hashSet.erase(s[L]);
+                L++;
             }
 
-            res = max(res, j - i + 1);
-            j++;
+            res = max(res, R - L + 1);
+            hashSet.insert(s[R]);
+            R++;
         }
 
         return res;
