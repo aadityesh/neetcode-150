@@ -97,14 +97,19 @@ public:
         deque<int> dq;
         for(int i = 0; i < n; i++) {
 
+            // remove elements outside of windowSize
             while(!dq.empty() && i-k >= dq.front())
                 dq.pop_front();
-            
+            // remove smaller elements (part of currentWindow) as they are useless
             while(!dq.empty() && nums[i] >= nums[dq.back()])
                 dq.pop_back();
             
+            // push the current element
             dq.push_back(i);
 
+            // dq's front will always give max element
+            // start adding elements as soon as 
+            // we pass our first window
             if(i>=k-1) {
                 res.push_back(nums[dq.front()]);
             }
