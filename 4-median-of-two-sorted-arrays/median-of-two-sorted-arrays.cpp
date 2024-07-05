@@ -2,103 +2,51 @@ class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 
-        // Brute
-        /*
-        int n = nums1.size();
-        int m = nums2.size();
+        // Assuming nums1 to be always the smallest
+        int m = nums1.size();
+        int n = nums2.size();
 
-        double ans = 0;
+        if (m > n)
+            return findMedianSortedArrays(nums2, nums1);
 
-        vector<int> merge;
-        int left = 0;
-        int right = 0;
+        int low = 0;
+        int high = m;
 
-        while (left < n && right < m) {
+        while (low <= high) {
 
-            if (nums1[left] <= nums2[right])
-                merge.push_back(nums1[left++]);
-            else
-                merge.push_back(nums2[right++]);
+            // mid
+            // P denotes number of elements taken from either nums1/nums2
+            int Px = (low + (high - low) / 2);
+            int Py = (m + n + 1) / 2 - Px;
 
-        }
+            // Denotes left half
+            int x1 = (Px == 0) ? INT_MIN : nums1[Px - 1];
+            int x2 = (Py == 0) ? INT_MIN : nums2[Py - 1];
 
-        while (left < n)
-            merge.push_back(nums1[left++]);
+            // Denotes right half
+            int x3 = (Px == m) ? INT_MAX : nums1[Px];
+            int x4 = (Py == n) ? INT_MAX : nums2[Py];
 
-        while (right < m)
-            merge.push_back(nums2[right++]);
+            if (x1 <= x4 && x2 <= x3) {
 
-        int q = merge.size();
+                if ((m + n) % 2 == 1) {
+                    return max(x1, x2) / 1.0;
+                }
 
-        if (q % 2 != 0)
-            return double(merge[q / 2]);
+                else {
+                    return (max(x1, x2) + min(x3, x4)) / 2.0;
+                }
+            }
 
-        else {
-            int idx = q / 2;
-            return double(merge[idx] + merge[idx - 1]) / 2.0;
-        }*/
-
-        // Better
-
-        int n = nums1.size();
-        int m = nums2.size();
-
-        int left = 0;
-        int right = 0;
-
-        int ele1 = -1;
-        int ele2 = -1;
-
-        int req_index2 = (n + m) / 2;
-        int req_index1 = req_index2 - 1;
-
-        int cnt = 0;
-        while (left < n && right < m) {
-
-            if (nums1[left] < nums2[right]) {
-
-                if (cnt == req_index1)
-                    ele1 = nums1[left];
-                if (cnt == req_index2)
-                    ele2 = nums1[left];
-
-                left++;
-                cnt++;
+            else if (x1 > x4) {
+                high = Px - 1;
             }
 
             else {
-
-                if (cnt == req_index1)
-                    ele1 = nums2[right];
-                if (cnt == req_index2)
-                    ele2 = nums2[right];
-                right++;
-                cnt++;
+                low = Px + 1;
             }
         }
 
-        while (left < n) {
-
-            if (cnt == req_index1)
-                ele1 = nums1[left];
-            if (cnt == req_index2)
-                ele2 = nums1[left];
-
-            left++;
-            cnt++;
-        }
-        while (right < m) {
-            if (cnt == req_index1)
-                ele1 = nums2[right];
-            if (cnt == req_index2)
-                ele2 = nums2[right];
-            right++;
-            cnt++;
-        }
-
-        if ((n + m) % 2 != 0)
-            return ele2;
-        else
-            return double(ele1 + ele2) / 2.0;
+        return -1;
     }
 };
