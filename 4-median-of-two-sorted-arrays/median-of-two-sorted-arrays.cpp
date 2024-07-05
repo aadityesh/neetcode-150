@@ -2,6 +2,10 @@ class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 
+        std::ios_base::sync_with_stdio(false);
+        std::cin.tie(NULL);
+        std::cout.tie(NULL);
+
         // Assuming nums1 to be always the smallest
         int m = nums1.size();
         int n = nums2.size();
