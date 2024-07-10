@@ -12,6 +12,8 @@
  */
 class Solution {
 public:
+    /*
+    // Brute
     void preorder(TreeNode* root, vector<int>& res) {
 
         if (root == NULL) {
@@ -36,5 +38,20 @@ public:
             return true;
 
         return false;
+    }
+    */
+
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+
+        if (p == NULL && q == NULL)
+            return true;
+
+        if (p == NULL || q == NULL)
+            return false;
+
+        if (p->val != q->val)
+            return false;
+
+        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
     }
 };
