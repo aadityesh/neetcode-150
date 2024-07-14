@@ -25,8 +25,12 @@ public:
         lh = (lh >= 0) ? lh : 0;
         rh = (rh >= 0) ? rh : 0;
 
+        // This statement helps us to calculate sum 
+        // for the current tree 
         res = max(res, lh + rh + root->val);
 
+        // This statement ensures we choose the
+        // the maximum path for the next iteration
         return max(lh, rh) + root->val;
     }
 
