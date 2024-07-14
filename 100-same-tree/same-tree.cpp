@@ -49,6 +49,8 @@ public:
         if (p == NULL || q == NULL)
             return false;
 
+        // PreOrder Traversal begins
+        // Root L R
         if (p->val != q->val)
             return false;
 
