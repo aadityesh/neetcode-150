@@ -1,31 +1,23 @@
-class Solution
-{
-    public:
-        bool isAnagram(string s, string t)
-        {
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
 
-            sort(s.begin(), s.end());
-            sort(t.begin(), t.end());
-            return s == t;
-           
-            /*
-            int n = s.size();
+        int len = s.length();
+        if (len != t.length())
+            return false;
+            
+        vector<int> hashArray(26, 0);
 
-            if (n != t.size()) return false;
-
-            unordered_map<char, int> mpp;
-
-            for (int i = 0; i < n; i++)
-            {
-                mpp[s[i]]++;
-                mpp[t[i]]--;
-            }
-
-            for(auto i : mpp) {
-                if(i.second)
-                    return false;
-            }
-            return true;
-            */
+        for (int i = 0; i < len; i++) {
+            hashArray[s[i] - 'a']++;
+            hashArray[t[i] - 'a']--;
         }
+
+        for (int i = 0; i < 26; i++) {
+            if (hashArray[i] != 0)
+                return false;
+        }
+
+        return true;
+    }
 };
