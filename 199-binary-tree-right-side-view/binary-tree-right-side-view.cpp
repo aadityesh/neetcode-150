@@ -1,7 +1,9 @@
 class Solution {
 public:
-    void helper(TreeNode* root, vector<int>& res) {
+    void helper(TreeNode* root, int level, vector<int>& res) {
 
+        /*
+        // Brute
         queue<TreeNode*> q;
         q.push(root);
         vector<vector<int>> traversal;
@@ -30,6 +32,17 @@ public:
         for (vector<int> vec : traversal) {
             res.push_back(vec.back());
         }
+        */
+
+        // Optimal
+        if (root == NULL)
+            return;
+
+        if (level == res.size())
+            res.push_back(root->val);
+
+        helper(root->right, level + 1, res);
+        helper(root->left, level + 1, res);
     }
 
     vector<int> rightSideView(TreeNode* root) {
@@ -38,7 +51,7 @@ public:
             return {};
 
         vector<int> result;
-        helper(root, result);
+        helper(root, 0, result);
 
         return result;
     }
