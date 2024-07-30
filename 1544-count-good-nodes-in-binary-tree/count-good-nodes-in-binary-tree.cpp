@@ -32,7 +32,7 @@ public:
             return 0;
 
         int cnt = 0;
-        int maxi = root->val;
+        int maxi = INT_MIN;
         helper(root, maxi, cnt);
 
         return cnt;
