@@ -12,39 +12,47 @@
  */
 class Solution {
 public:
-    void inorder(TreeNode* root, vector<int>& res) {
-        if (root == NULL)
-            return;
-        inorder(root->left, res);
-        res.push_back(root->val);
-        inorder(root->right, res);
+    // void inorder(TreeNode* root, vector<int>& res) {
+    //     if (root == NULL)
+    //         return;
+    //     inorder(root->left, res);
+    //     res.push_back(root->val);
+    //     inorder(root->right, res);
+    // }
+
+    bool traversal(TreeNode* root, long mini, long maxi) {
+
+        if(root == NULL) return true;
+
+        if(root->val >= maxi || root->val <= mini) return false;
+
+        return 
+        traversal(root->left, mini, root->val) && 
+        traversal(root->right, root->val, maxi);
+
+
     }
 
     bool isValidBST(TreeNode* root) {
-        // if (root == NULL)
-        //     return false;
 
-        // isValidBST(root->left);
-        // isValidBST(root->right);
+        // Brute
+        /*
+        
+            vector<int> res;
+            inorder(root, res);
 
-        // int left = (root->left == NULL) ? INT_MIN : root->left->val;
-        // int right = (root->right == NULL) ? INT_MAX : root->right->val;
+            for (int i : res)
+                cout << i << " ";
 
-        // if (left >= root->val || right <= root->val)
-        //     return false;
+            for (int i = 0; i < res.size() - 1; i++) {
+                if (res[i] >= res[i + 1])
+                    return false;
+            }
 
-        // return true;
-        vector<int> res;
-        inorder(root, res);
+            return true;
+        */
 
-        for (int i : res)
-            cout << i << " ";
-
-        for (int i = 0; i < res.size() - 1; i++) {
-            if (res[i] >= res[i + 1])
-                return false;
-        }
-
-        return true;
+        // Optimal
+        return traversal(root, LONG_MIN, LONG_MAX);
     }
 };
