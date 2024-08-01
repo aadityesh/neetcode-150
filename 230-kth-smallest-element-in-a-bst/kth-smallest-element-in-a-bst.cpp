@@ -21,13 +21,39 @@ class Solution {
         pqSetup(root->right, pq);
     }
 
+    void inorder(TreeNode* root, int k, int& cnt, int& ans) {
+
+        if (root == NULL)
+            return;
+
+        inorder(root->left, k, cnt, ans);
+        
+        cnt++;
+
+        if (cnt == k) {
+            ans = root->val;
+            return;
+        }
+
+        inorder(root->right, k, cnt, ans);
+    }
+
 public:
     int kthSmallest(TreeNode* root, int k) {
 
-        priority_queue<int, vector<int>, greater<int>> pq;
-        pqSetup(root, pq);
-        while (--k)
-            pq.pop();
-        return pq.top();
+        // Brute
+        /*
+            priority_queue<int, vector<int>, greater<int>> pq;
+            pqSetup(root, pq);
+            while (--k)
+                pq.pop();
+            return pq.top();
+        */
+
+        // Optimal
+        int ans = -1;
+        int cnt = 0;
+        inorder(root, k, cnt, ans);
+        return ans;
     }
 };
