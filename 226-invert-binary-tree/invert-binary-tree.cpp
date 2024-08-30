@@ -14,9 +14,8 @@ class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
 
-        /*if (!root)
-            return NULL;
-
+        if(root == NULL) return NULL;
+        
         queue<TreeNode*> q;
         vector<vector<int>> res;
         q.push(root);
@@ -26,34 +25,19 @@ public:
             vector<int> level;
             int size = q.size();
 
-            for (int i = 0; i < size; i++) {
+            while (size--) {
 
                 TreeNode* curr = q.front();
                 q.pop();
 
-                if (curr->left != NULL)
+                if (curr->left)
                     q.push(curr->left);
-
-                if (curr->right != NULL)
+                if (curr->right)
                     q.push(curr->right);
 
-                TreeNode* left = curr->left;
-                TreeNode* right = curr->right;
-
-                curr->left = right;
-                curr->right = left;
-
-                level.push_back(curr->val);
+                swap(curr->left, curr->right);
             }
-
-            res.push_back(level);
         }
-
-        */
-        if(root == NULL) return NULL;
-        swap(root->left, root->right);
-        invertTree(root->left);
-        invertTree(root->right);
 
         return root;
     }
