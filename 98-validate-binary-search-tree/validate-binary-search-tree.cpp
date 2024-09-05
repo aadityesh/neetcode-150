@@ -12,36 +12,13 @@
  */
 class Solution {
 public:
-    void predecessor(TreeNode* root, long& maxi) {
-        if (root == nullptr)
-            return;
-        maxi = max(maxi, long(root->val));
-        predecessor(root->left, maxi);
-        predecessor(root->right, maxi);
-    }
-
-    void successor(TreeNode* root, long& mini) {
-        if (root == nullptr)
-            return;
-        mini = min(mini, long(root->val));
-        successor(root->left, mini);
-        successor(root->right, mini);
-    }
-
-    bool isValidBST(TreeNode* root) {
+    bool dfs(TreeNode* root, long mini, long maxi) {
         if (root == NULL)
             return true;
-
-        long p = LONG_MIN, s = LONG_MAX;
-        predecessor(root->left, p);
-        successor(root->right, s);
-        cout << p << " " << s << endl;
-
-        if (p >= root->val)
+        if (root->val <= mini || root->val >= maxi)
             return false;
-        if (s <= root->val)
-            return false;
-
-        return isValidBST(root->left) && isValidBST(root->right);
+        return dfs(root->left, mini, root->val) &&
+               dfs(root->right, root->val, maxi);
     }
+    bool isValidBST(TreeNode* root) { return dfs(root, LONG_MIN, LONG_MAX); }
 };
