@@ -12,47 +12,36 @@
  */
 class Solution {
 public:
-    // void inorder(TreeNode* root, vector<int>& res) {
-    //     if (root == NULL)
-    //         return;
-    //     inorder(root->left, res);
-    //     res.push_back(root->val);
-    //     inorder(root->right, res);
-    // }
+    void predecessor(TreeNode* root, long& maxi) {
+        if (root == nullptr)
+            return;
+        maxi = max(maxi, long(root->val));
+        predecessor(root->left, maxi);
+        predecessor(root->right, maxi);
+    }
 
-    bool traversal(TreeNode* root, long mini, long maxi) {
-
-        if(root == NULL) return true;
-
-        if(root->val >= maxi || root->val <= mini) return false;
-
-        return 
-        traversal(root->left, mini, root->val) && 
-        traversal(root->right, root->val, maxi);
-
-
+    void successor(TreeNode* root, long& mini) {
+        if (root == nullptr)
+            return;
+        mini = min(mini, long(root->val));
+        successor(root->left, mini);
+        successor(root->right, mini);
     }
 
     bool isValidBST(TreeNode* root) {
-
-        // Brute
-        /*
-        
-            vector<int> res;
-            inorder(root, res);
-
-            for (int i : res)
-                cout << i << " ";
-
-            for (int i = 0; i < res.size() - 1; i++) {
-                if (res[i] >= res[i + 1])
-                    return false;
-            }
-
+        if (root == NULL)
             return true;
-        */
 
-        // Optimal
-        return traversal(root, LONG_MIN, LONG_MAX);
+        long p = LONG_MIN, s = LONG_MAX;
+        predecessor(root->left, p);
+        successor(root->right, s);
+        cout << p << " " << s << endl;
+
+        if (p >= root->val)
+            return false;
+        if (s <= root->val)
+            return false;
+
+        return isValidBST(root->left) && isValidBST(root->right);
     }
 };
