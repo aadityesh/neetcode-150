@@ -1,65 +1,51 @@
-
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+ */
 class Solution {
 public:
-    // Brute
-    /*
-    int findPosition(vector<int>& inorder, int elem) {
-        for(int i = 0; i < inorder.size(); i++) {
-            if(inorder[i] == elem) return i;
+    // Binary Tree - Root , Left, Right
+    // preorder - N L R
+    // inorder  - L N R
+
+    int linearSearch(vector<int>& in, int key) {
+        for (int i = 0; i < in.size(); i++) {
+            if (in[i] == key)
+                return i;
         }
-
         return -1;
-
-    }
-    */
-
-    int findPosition(unordered_map<int, int>& umap, int elem) {
-        if (umap.find(elem) == umap.end())
-            return -1;
-
-        return umap[elem];
     }
 
-    // TreeNode* solve(vector<int>& preorder, vector<int>& inorder, int& index,
-    //                 int istart, int iend) {
+    TreeNode* helper(vector<int>& pre, vector<int>& in, int &index, int s,
+                     int e) {
 
-    TreeNode* solve(vector<int>& preorder, vector<int>& inorder, int& index,
-                    int istart, int iend, unordered_map<int, int>& umap) {
-
-        if (index >= preorder.size() || istart > iend)
+        // base
+        if (index >= pre.size() || s > e)
             return NULL;
 
-        // EXTRACTION OF ROOT
-        int currentRootData = preorder[index++]; // updation of index
-        TreeNode* currentRoot = new TreeNode(currentRootData);
+        TreeNode* root = new TreeNode(pre[index]);
+        int pos = linearSearch(in, pre[index]);
+        index++;
+        root->left = helper(pre, in, index, s, pos - 1);
+        root->right = helper(pre, in, index, pos + 1, e);
 
-        // EXTRACTION OF L, R
-        int currentRootPosition =
-            findPosition(umap, currentRootData); // helps us in finding L,R
-        currentRoot->left =
-            solve(preorder, inorder, index, istart, currentRootPosition - 1, umap);
-        currentRoot->right =
-            solve(preorder, inorder, index, currentRootPosition + 1, iend, umap);
-
-        return currentRoot;
+        return root;
     }
 
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+    TreeNode* buildTree(vector<int>& pre, vector<int>& in) {
+        int n = pre.size();
+        int index = 0;
 
-        int n = preorder.size();
-        int extractRootIndex = 0;
-
-        unordered_map<int, int> umap;
-        for (int i = 0; i < n; i++) {
-            umap[inorder[i]] = i;
-        }
-
-        // TreeNode* root = solve(preorder, inorder, extractRootIndex, 0,
-        //                        n - 1); // inorder-start, inorder-end
-
-        TreeNode* root = solve(preorder, inorder, extractRootIndex, 0,
-                               n - 1, umap); // inorder-start, inorder-end
-
+        TreeNode* root;
+        root = helper(pre, in, index, 0, n - 1);
         return root;
     }
 };
