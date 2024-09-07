@@ -1,42 +1,52 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
 class Codec {
 public:
-    void dfs(TreeNode* root, ostringstream& out) {
-
+    void preorder(TreeNode* root, ostringstream& res) {
         if (root == NULL) {
-            out << "N" << " ";
+            res << "N"
+                << " ";
             return;
         }
-
-        out << root->val << " ";
-        dfs(root->left, out);
-        dfs(root->right, out);
+        res << root->val << " ";
+        preorder(root->left, res);
+        preorder(root->right, res);
     }
-
-    TreeNode* buildTree(istringstream& in) {
-
-        string value = "";
-        in >> value;
-
-        if (value == "N")
-            return NULL;
-
-        int rootData = stoi(value);
-        TreeNode* root = new TreeNode(rootData);
-        root->left = buildTree(in);
-        root->right = buildTree(in);
-
-        return root;
-    }
-
     string serialize(TreeNode* root) {
-        ostringstream out;
-        dfs(root, out);
-        return out.str();
+        ostringstream tree;
+        preorder(root, tree);
+        return tree.str();
+    }
+    TreeNode* buildTree(TreeNode* root, istringstream& data, int& index) {
+
+        string s = "";
+        data >> s;
+
+        if (s == "N") {
+            return NULL;
+        }
+        root = new TreeNode(stoi(s));
+        root->left = buildTree(root->left, data, index);
+        root->right = buildTree(root->right, data, index);
+        return root;
     }
 
     TreeNode* deserialize(string data) {
-        istringstream in(data);
-        TreeNode* root = buildTree(in);
+        TreeNode* root;
+        istringstream input(data);
+        int index = 0;
+        root = buildTree(root, input, index);
         return root;
     }
 };
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser, deser;
+// TreeNode* ans = deser.deserialize(ser.serialize(root));
