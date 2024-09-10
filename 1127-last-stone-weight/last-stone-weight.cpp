@@ -9,6 +9,9 @@ public:
 
         while (!pq.empty()) {
 
+            if (pq.size() == 1)
+                return pq.top();
+
             int y = pq.top();
             pq.pop();
             int x = pq.top();
@@ -20,9 +23,6 @@ public:
             /* else
                if x == y then we move on
             */
-
-            if (pq.size() == 1)
-                return pq.top();
         }
 
         return 0;
