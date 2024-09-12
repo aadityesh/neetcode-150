@@ -10,6 +10,7 @@ public:
             hash[ch - 'A']++;
         }
 
+        /*
         for (int i = 0; i < 26; i++) {
             if (hash[i] > 0)
                 pq.push(hash[i]);
@@ -40,5 +41,20 @@ public:
         }
 
         return res;
+        */
+        sort(rbegin(hash), rend(hash));
+
+        int holes = hash[0] - 1;
+        int idleSpots = holes * n;
+
+        for (int i = 1; i < 26; i++) {
+            idleSpots = idleSpots - min(hash[i], holes);
+            // cout << hash[i] << " ";
+        }
+
+        if (idleSpots > 0)
+            return tasks.size() + idleSpots;
+            
+        return tasks.size();
     }
 };
