@@ -1,27 +1,16 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-
-        // Brute - Two nested loops
-
-        // Optimal
+        // sort(nums.begin(), nums.end());
         unordered_map<int, int> umap;
-        int i, sum, diff;
-        i = sum = diff = 0;
-
-        while (i < nums.size()) {
-            int diff = target - nums[i];
+        int diff = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            diff = target - nums[i];
             if (umap.find(diff) != umap.end()) {
-                int j = umap[diff];
-                // cout << j << endl;
-                if (i != j) {
-                    return {i, j};
-                }
+                return {i, umap[diff]};
             }
             umap[nums[i]] = i;
-            i++;
         }
-
-        return {};
+        return {-1, -1};
     }
 };
