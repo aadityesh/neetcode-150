@@ -4,10 +4,13 @@ public:
 
         int n = nums.size();
         int missing = 0;
+        int range = 0;
 
-        for(int i = 0; i <= n; i++) missing ^= i; 
-        for(int i = 0; i < n; i++) missing ^= nums[i]; 
+        for(int i = 0; i < n; i++) {
+            range ^= i;
+            missing ^= nums[i];
+        }
 
-        return missing;
+        return (missing ^ range ^ n);
     }
 };
