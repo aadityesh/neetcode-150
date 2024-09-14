@@ -4,6 +4,39 @@ public:
 
         int n = score.size();
         vector<string> res(n);
+
+        int maxElement = *max_element(score.begin(), score.end());
+        vector<int> indexes(maxElement + 1, 0);
+
+        for (int i = 0; i < n; i++) {
+            indexes[score[i]] = i + 1;
+        }
+
+        int rank = 1;
+        for (int i = maxElement; i >= 0; i--) {
+
+            if (indexes[i] > 0) {
+                int ind = indexes[i] - 1;
+                cout << ind << " " << rank << endl;
+                if (rank == 1)
+                    res[ind] = "Gold Medal";
+                else if (rank == 2)
+                    res[ind] = "Silver Medal";
+                else if (rank == 3)
+                    res[ind] = "Bronze Medal";
+                else
+                    res[ind] = to_string(rank);
+                
+                rank++;
+            }
+        }
+
+        return res;
+    }
+
+    /*{
+        int n = score.size();
+        vector<string> res(n);
         int rank = 1;
         priority_queue<pair<int, int>> pq;
 
@@ -30,5 +63,5 @@ public:
         }
 
         return res;
-    }
+    }*/
 };
