@@ -1,11 +1,11 @@
 class Solution {
 public:
     int getSum(int a, int b) {
-        int temp = 0;
+        unsigned int temp = 0;
         while (b) {
-            temp = (a & b) << 1;
+            temp = (a & b);
             a = a ^ b;
-            b = temp;
+            b = temp << 1;
         }
         return a;
     }
