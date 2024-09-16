@@ -1,12 +1,14 @@
+/*
+Time Complexity - O()
+Space Complexity - O()
+*/
+
 class Solution {
 public:
     int getSum(int a, int b) {
-        unsigned int temp = 0;
-        while (b) {
-            temp = (a & b);
-            a = a ^ b;
-            b = temp << 1;
-        }
-        return a;
+       if(b == 0) return a;
+			 int carry = (a&b) << 1;
+			 int sum = a^b;
+			 return getSum(sum, carry);
     }
 };
