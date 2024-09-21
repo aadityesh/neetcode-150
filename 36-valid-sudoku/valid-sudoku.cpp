@@ -1,57 +1,25 @@
 class Solution {
 public:
-    bool isValidSudoku(vector<vector<char>>& board) {
+    bool isValidSudoku(vector<vector<char>>& a) {
 
-        // check for rows
-        for (int row = 0; row < 9; row++) {
-            set<int> st;
-            for (int col = 0; col < 9; col++) {
-                if (board[row][col] == '.')
-                    continue;
-                int value = board[row][col] - '1';
-                if (st.find(value) != st.end())
-                    return false;
-                st.insert(value);
-            }
-        }
+        int rows[9][9] = {0};
+        int cols[9][9] = {0};
+        int grids[9][9] = {0};
 
-        // check for cols
-        for (int col = 0; col < 9; col++) {
-            set<int> st;
-            for (int row = 0; row < 9; row++) {
-                if (board[row][col] == '.')
-                    continue;
-                int value = board[row][col] - '1';
-                if (st.find(value) != st.end())
-                    return false;
-                st.insert(value);
-            }
-        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (a[i][j] != '.') {
 
-        // check for grid (3x3)
-        int rs = 0, re = 0, cs = 0, ce = 0;
-        for (int row = 0; row < 9; row += 3) {
-            rs = row;
-            re = row + 2;
-            cs = 0;
-            ce = 2;
+                    int curr = a[i][j] - '1';
+                    int k = (i / 3) + (j / 3) * 3;
 
-            for (int times = 0; times < 3; times++) {
+                    if (rows[i][curr] || cols[j][curr] || grids[k][curr])
+                        return false;
 
-                set<int> st;
-                for (int i = rs; i <= re; i++) {
-                    for (int j = cs; j <= ce; j++) {
-                        if (board[i][j] == '.')
-                            continue;
-                        int value = board[i][j] - '1';
-                        if (st.find(value) != st.end())
-                            return false;
-                        st.insert(value);
-                    }
+                    rows[i][curr]++;
+                    cols[j][curr]++;
+                    grids[k][curr]++;
                 }
-
-                cs += 3;
-                ce += 3;
             }
         }
 
