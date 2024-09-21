@@ -11,14 +11,14 @@ public:
                 if (a[i][j] != '.') {
 
                     int curr = a[i][j] - '1';
-                    int k = (i / 3) + (j / 3) * 3;
+                    int subgrid = (i / 3) + (j / 3) * 3;
 
-                    if (rows[i][curr] || cols[j][curr] || grids[k][curr])
+                    if (rows[i][curr] || cols[j][curr] || grids[subgrid][curr])
                         return false;
 
                     rows[i][curr]++;
                     cols[j][curr]++;
-                    grids[k][curr]++;
+                    grids[subgrid][curr]++;
                 }
             }
         }
