@@ -56,22 +56,25 @@ public:
         return res;
     }*/
 
+    // Optimal Approach
     int longestConsecutive(vector<int>& nums) {
-
-        set<int> st(nums.begin(), nums.end());
-        if (nums.size() == 0)
-            return nums.size();
-
-        int res = 0, cnt = 1;
-        for (const int& i : st) {
-            if (st.find(i + 1) != st.end()) {
-                cnt++;
-            } else {
-                res = max(res, cnt);
-                cnt = 1;
+        unordered_set<int> set;
+        for (int num : nums) {
+            set.insert(num);
+        }
+        int longestConsecutiveSequence = 0;
+        for (int num : nums) {
+            if (set.find(num - 1) == set.end()) {
+                int currentNumber = num;
+                int currentConsecutiveSequence = 1;
+                while (set.find(currentNumber + 1) != set.end()) {
+                    currentNumber++;
+                    currentConsecutiveSequence++;
+                }
+                longestConsecutiveSequence =
+                    max(longestConsecutiveSequence, currentConsecutiveSequence);
             }
         }
-
-        return res;
+        return longestConsecutiveSequence;
     }
 };
