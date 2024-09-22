@@ -1,26 +1,31 @@
 class Solution {
 public:
-    void combinations(vector<vector<int>> &res, vector<int>& temp,
-                      vector<int> &input, int target, int ind) {
+    void combinations(vector<vector<int>>& res, vector<int>& temp,
+                      vector<int>& input, int target, int sum, int ind) {
 
-        if (ind == input.size()) {
-            if (target == 0)
-                res.push_back(temp);
+        if (ind == input.size() || sum > target) {
             return;
         }
 
-        if (input[ind] <= target) {
-            temp.push_back(input[ind]);
-            combinations(res, temp, input, target - input[ind], ind);
-            temp.pop_back();
+        if (sum == target) {
+            res.push_back(temp);
+            return;
         }
-        combinations(res, temp, input, target, ind + 1);
+
+        sum += input[ind];
+        temp.push_back(input[ind]);
+        combinations(res, temp, input, target, sum, ind);
+
+        sum -= input[ind];
+        temp.pop_back();
+        combinations(res, temp, input, target, sum, ind + 1);
     }
     vector<vector<int>> combinationSum(vector<int>& input, int target) {
         int ind = 0;
+        int sum = 0;
         vector<vector<int>> res;
         vector<int> temp;
-        combinations(res, temp, input, target, ind);
+        combinations(res, temp, input, target, sum, ind);
         return res;
     }
 };
