@@ -13,9 +13,11 @@ public:
         /*
             1. Find break point
             2. swap with the next greater value
-            3. call sort for range (breakpoint+1, n)
+            3. call reverse for range (breakpoint+1, n)
 
             // 2 1 5 4 3
+            // 2 3 5 4 1
+            // 2 3 1 4 5
 
         */
         int n = input.size();
@@ -32,7 +34,6 @@ public:
             return input;
         }
 
-        int ngeIndex = -1;
         for (int i = n - 1; i > breakPointIndex; i--) {
             if (input[i] > input[breakPointIndex]) {
                 swap(input[breakPointIndex], input[i]);
