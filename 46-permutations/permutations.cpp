@@ -1,7 +1,7 @@
 class Solution {
 public:
     void dfs(vector<int>& input, vector<vector<int>>& result,
-             vector<int>& current, unordered_set<int>& hashSet) {
+             vector<int>& current, vector<bool>& hashSet) {
 
         if (current.size() == input.size()) {
             result.push_back(current);
@@ -9,12 +9,12 @@ public:
         }
 
         for (int i = 0; i < input.size(); i++) {
-            if (hashSet.find(input[i]) == hashSet.end()) {
+            if (hashSet[i] == false) {
                 current.push_back(input[i]);
-                hashSet.insert(input[i]);
+                hashSet[i] = true;
                 dfs(input, result, current, hashSet);
                 current.pop_back();
-                hashSet.erase(input[i]);
+                hashSet[i] = false;
             }
         }
     }
@@ -23,7 +23,7 @@ public:
 
         vector<vector<int>> result;
         vector<int> current;
-        unordered_set<int> hashSet;
+        vector<bool> hashSet(input.size(), false);
 
         dfs(input, result, current, hashSet);
 
