@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void combinations(vector<vector<int>>& res, vector<int>& temp,
+    void combinations(vector<vector<int>>& res, vector<int> temp,
                       vector<int>& input, int target, int sum, int ind) {
 
         if (ind == input.size() || sum > target) {
