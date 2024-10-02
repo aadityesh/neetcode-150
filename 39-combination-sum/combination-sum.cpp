@@ -3,15 +3,15 @@ public:
     void combinations(vector<vector<int>>& res, vector<int> temp,
                       vector<int>& input, int target, int sum, int ind) {
 
-        if (ind == input.size() || sum > target) {
-            return;
-        }
-
         if (sum == target) {
             res.push_back(temp);
             return;
         }
 
+        if (ind == input.size() || sum > target) {
+            return;
+        }
+        
         sum += input[ind];
         temp.push_back(input[ind]);
         combinations(res, temp, input, target, sum, ind);
