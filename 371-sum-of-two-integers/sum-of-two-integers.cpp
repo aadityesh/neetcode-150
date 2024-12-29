@@ -1,14 +1,14 @@
-/*
-Time Complexity - O()
-Space Complexity - O()
-*/
-
 class Solution {
 public:
     int getSum(int a, int b) {
-       if(b == 0) return a;
-			 int carry = (a&b) << 1;
-			 int sum = a^b;
-			 return getSum(sum, carry);
+
+        int carry = 0;
+
+        while (b) {
+            int carry = (a & b) << 1;
+            a = a ^ b;
+            b = carry;
+        }
+        return a;
     }
 };
