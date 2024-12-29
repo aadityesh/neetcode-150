@@ -1,24 +1,22 @@
 class Solution {
 public:
     int reverse(int x) {
-
-        int lastDigit = 0;
         int res = 0;
-
         while (x) {
+            int digit = x % 10;
 
-            lastDigit = x % 10;
-
-            if (res > (INT_MAX / 10) || res == (INT_MAX / 10) && lastDigit > 7)
+            if ((res > (INT_MAX / 10)) || 
+              (res == INT_MAX / 10 && digit > (INT_MAX % 10)))
                 return 0;
 
-            if (res < (INT_MIN / 10) || res == (INT_MIN / 10) && lastDigit < -8)
+            if ((res < (INT_MIN / 10)) ||
+                ((res == INT_MIN / 10 && digit < (INT_MIN % 10))))
                 return 0;
 
-            res = (res * 10) + lastDigit;
+            res = (res * 10) + digit;
             x /= 10;
         }
-        // cout << INT_MAX << " " << INT_MIN << endl;
+
         return res;
     }
 };
