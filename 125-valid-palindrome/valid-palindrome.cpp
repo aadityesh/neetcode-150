@@ -1,37 +1,47 @@
 
 class Solution {
 public:
+    bool alphanumeric(char ch) {
+        if (ch >= 'A' && ch <= 'Z')
+            return true;
+        if (ch >= 'a' && ch <= 'z')
+            return true;
+        if (ch >= '0' && ch <= '9')
+            return true;
+
+        return false;
+    }
     bool isPalindrome(string s) {
 
         int n = s.length();
         int L = 0;
         int R = n - 1;
 
-        /* while (L < R) {
+        while (L < R) {
 
-             char left = toupper(s[L]);
-             char right = toupper(s[R]);
+            char left = toupper(s[L]);
+            char right = toupper(s[R]);
 
-             if (!isalnum(left)) {
-                 L++;
-                 continue;
-             }
+            if (!alphanumeric(left)) {
+                L++;
+                continue;
+            }
 
-             if (!isalnum(right)) {
-                 R--;
-                 continue;
-             }
+            if (!alphanumeric(right)) {
+                R--;
+                continue;
+            }
 
-             if (left != right)
-                 return false;
+            if (left != right)
+                return false;
 
-             L++;
-             R--;
-         }
+            L++;
+            R--;
+        }
 
-         return true;*/
+        return true;
 
-        string temp = "";
+        /*string temp = "";
         while (L <= R) {
             if (isalnum(s[L]))
                 temp += tolower(s[L]);
@@ -41,6 +51,6 @@ public:
         string temp_cpy = temp;
         reverse(temp.begin(), temp.end());
 
-        return temp_cpy == temp;
+        return temp_cpy == temp;*/
     }
 };
