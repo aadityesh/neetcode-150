@@ -24,7 +24,7 @@ public:
         }
 
         for(int i = 0; i < n; i++) {
-            if(height[i] < min(prefix[i], suffix[i])) {
+            if(height[i] < prefix[i] && height[i] < suffix[i]) {
                 res += (min(prefix[i], suffix[i]) - height[i]);
             }
         }
