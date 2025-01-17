@@ -12,19 +12,14 @@ public:
     }
 
     void pop() {
-        if (st2.top() == st1.top()) {
+        if (st1.top() == st2.top())
             st2.pop();
-        }
         st1.pop();
     }
 
     int top() { return st1.top(); }
 
-    int getMin() {
-        if (!st2.empty())
-           { return st2.top();}
-        return -1;
-    }
+    int getMin() { return st2.top(); }
 };
 
 /**
