@@ -26,6 +26,10 @@ public:
         */
 
         int L = 0; // contains position to fill with non-zero element
+
+        // This approach is about picking 
+        // non-zero elems and placing them
+        // from the start (left/index=0)
         for (int R = 0; R < n; R++) {
             if (nums[R] != 0) {
                 swap(nums[L], nums[R]);
