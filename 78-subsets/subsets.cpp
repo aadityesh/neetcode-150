@@ -1,17 +1,23 @@
 class Solution {
+    vector<vector<int>> res;
 public:
-    vector<vector<int>> subsets(vector<int>& nums) {
-        vector<vector<int>> subs = {{}};
-        
-        for (int num : nums) {
+    void dfs(int ind, vector<int> &nums, vector<int> temp) {
 
-            int n = subs.size(); 
-            cout << n << " ";
-            for (int i = 0; i < n; i++) {
-                subs.push_back(subs[i]);
-                subs.back().push_back(num);
-            }
+        if(ind >= nums.size()) {
+            res.push_back(temp);
+            return;
         }
-        return subs;
+
+        temp.push_back(nums[ind]);
+        dfs(ind + 1, nums, temp);
+
+        temp.pop_back();
+        dfs(ind + 1, nums, temp);
+
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int> temp;
+        dfs(0, nums, temp);
+        return res;
     }
 };
