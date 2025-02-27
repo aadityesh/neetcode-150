@@ -1,41 +1,37 @@
 class Solution {
-public:
-    vector<vector<int>> combinationSum2(vector<int>& input, int _target) {
-        this->target = _target;
-        sort(input.begin(), input.end());
-        generate(input, {}, 0, 0);
-        // for (auto i : st)
-        //     res.push_back(i);
-        return res;
-    }
+    vector<vector<int>> res;
+    int target;
 
-    void generate(vector<int>& input, vector<int> temp, int sum, int i) {
+public:
+    void dfs(int ind, int sum, vector<int> temp, vector<int>& input) {
 
         if (sum == target) {
-            // sort(temp.begin(), temp.end());
             res.push_back(temp);
             return;
         }
 
-        if (i == input.size() || sum > target) {
+        if (ind >= input.size() || sum > target) {
             return;
         }
 
-        sum += input[i];
-        temp.push_back(input[i]);
-        generate(input, temp, sum, i + 1);
+        sum += input[ind];
+        temp.push_back(input[ind]);
+        dfs(ind + 1, sum, temp, input);
 
-        sum -= input[i];
+        sum -= input[ind];
         temp.pop_back();
 
-        while (i + 1 < input.size() && input[i] == input[i + 1])
-            i++;
+        // skipping the duplicate elements at the same level.
+        while ((ind + 1) < input.size() && input[ind] == input[ind + 1])
+            ind++;
 
-        generate(input, temp, sum, i + 1);
+        dfs(ind + 1, sum, temp, input);
     }
 
-private:
-    vector<vector<int>> res;
-    set<vector<int>> st;
-    int target;
+    vector<vector<int>> combinationSum2(vector<int>& input, int _target) {
+        this->target = _target;
+        sort(input.begin(), input.end());
+        dfs(0, 0, {}, input);
+        return res;
+    }
 };
