@@ -3,29 +3,31 @@ class Solution {
     int target;
     void dfs(int ind, int sum, vector<int> temp, vector<int>& input) {
 
-        if (ind >= input.size()) {
-            if (sum == target)
-                res.push_back(temp);
+        if (sum == target) {
+            res.push_back(temp);
             return;
         }
 
-        if (sum > target) {
-            return;
+        for (int j = ind; j < input.size(); j++) {
+
+            if (sum + input[j] > target)
+                return;
+
+            sum += input[j];
+            temp.push_back(input[j]);
+
+            dfs(j, sum, temp, input);
+
+            sum -= input[j];
+            temp.pop_back();
         }
-
-        temp.push_back(input[ind]);
-        sum += input[ind];
-        dfs(ind, sum, temp, input);
-
-        temp.pop_back();
-        sum -= input[ind];
-        dfs(ind + 1, sum, temp, input);
     }
 
 public:
     vector<vector<int>> combinationSum(vector<int>& input, int _target) {
         vector<int> temp;
         this->target = _target;
+        sort(input.begin(), input.end());
         dfs(0, 0, temp, input); // ind, sum, temp, inp
         return res;
     }
