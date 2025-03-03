@@ -10,22 +10,23 @@ public:
             return;
         }
 
-        if (ind >= input.size() || sum > target) {
-            return;
+        for (int j = ind; j < input.size(); j++) {
+
+            if (j > ind && input[j] == input[j - 1])
+                continue;
+
+            if (sum + input[j] > target) {
+                break;
+            }
+
+            sum += input[j];
+            temp.push_back(input[j]);
+
+            dfs(j + 1, sum, temp, input);
+
+            sum -= input[j];
+            temp.pop_back();
         }
-
-        sum += input[ind];
-        temp.push_back(input[ind]);
-        dfs(ind + 1, sum, temp, input);
-
-        sum -= input[ind];
-        temp.pop_back();
-
-        // skipping the duplicate elements at the same level.
-        while ((ind + 1) < input.size() && input[ind] == input[ind + 1])
-            ind++;
-
-        dfs(ind + 1, sum, temp, input);
     }
 
     vector<vector<int>> combinationSum2(vector<int>& input, int _target) {
