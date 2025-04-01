@@ -1,18 +1,16 @@
 class Solution {
 public:
     vector<int> getConcatenation(vector<int>& nums) {
+        /*
+        1 2 3
+        1 2 3 1 2 3
+
+        1. Create a temp arr
+        2. Run a loop for 2n times over input array
+
+        */
 
         int n = nums.size();
-        vector<int> res(2 * n, 0);
-
-        // Brute
-        /* for (int i = 0; i < n; i++) {
-             res[i] = nums[i];
-             res[n + i] = nums[i];
-         }
-         return res;
-         */
-        // Optimal
         for (int i = 0; i < n; i++)
             nums.push_back(nums[i]);
         
