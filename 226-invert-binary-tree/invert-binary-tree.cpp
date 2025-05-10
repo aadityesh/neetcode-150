@@ -14,30 +14,15 @@ class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
 
-        if(root == NULL) return NULL;
-        
-        queue<TreeNode*> q;
-        vector<vector<int>> res;
-        q.push(root);
+        if (root == NULL)
+            return NULL;
 
-        while (!q.empty()) {
+        TreeNode* curr = root->left;
+        root->left = root->right; 
+        root->right = curr;
 
-            vector<int> level;
-            int size = q.size();
-
-            while (size--) {
-
-                TreeNode* curr = q.front();
-                q.pop();
-
-                if (curr->left)
-                    q.push(curr->left);
-                if (curr->right)
-                    q.push(curr->right);
-
-                swap(curr->left, curr->right);
-            }
-        }
+        invertTree(root->left);
+        invertTree(root->right);
 
         return root;
     }
