@@ -14,6 +14,10 @@ class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
 
+        // DFS - Recursive
+
+        /*
+
         if (root == NULL)
             return NULL;
 
@@ -23,6 +27,35 @@ public:
 
         invertTree(root->left);
         invertTree(root->right);
+
+        return root;
+
+        */
+
+        // DFS - Iterative
+
+        if (root == NULL)
+            return NULL;
+        
+        stack<TreeNode* > st;
+        st.push(root);
+
+        while(!st.empty()) {
+
+            TreeNode* curr = st.top();
+            st.pop();
+
+            if(curr->left != NULL) {
+                st.push(curr->left);
+            }
+
+            if(curr->right != NULL) {
+                st.push(curr->right);
+            }
+
+            swap(curr->left, curr->right);
+
+        }
 
         return root;
     }
