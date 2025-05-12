@@ -45,12 +45,12 @@ public:
             TreeNode* curr = st.top();
             st.pop();
 
-            if(curr->left != NULL) {
-                st.push(curr->left);
-            }
-
             if(curr->right != NULL) {
                 st.push(curr->right);
+            }
+
+            if(curr->left != NULL) {
+                st.push(curr->left);
             }
 
             swap(curr->left, curr->right);
