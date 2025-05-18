@@ -47,7 +47,7 @@ public:
 
         vector<TreeNode*> nodes = BFS(root);
         for (auto& node : nodes) {
-            if (isSameTree(node, subRoot))
+            if ((node->val == subRoot->val) && isSameTree(node, subRoot))
                 return true;
         }
         return false;
