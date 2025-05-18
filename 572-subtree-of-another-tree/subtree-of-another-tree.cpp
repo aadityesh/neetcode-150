@@ -45,11 +45,19 @@ public:
 
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
 
-        vector<TreeNode*> nodes = BFS(root);
+      /*  vector<TreeNode*> nodes = BFS(root);
         for (auto& node : nodes) {
             if ((node->val == subRoot->val) && isSameTree(node, subRoot))
                 return true;
         }
         return false;
+        */
+
+        if(root == NULL) return false;
+
+        if((root->val == subRoot->val) && isSameTree(root, subRoot))
+            return true;
+
+        return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot); 
     }
 };
