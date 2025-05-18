@@ -12,18 +12,19 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode* root, int i, vector<int>& res) {
+    void helper(TreeNode* root, vector<int>& res, int i) {
         if (root == NULL)
             return;
-        if (i == res.size())
+
+        if (res.size() < i)
             res.push_back(root->val);
-        dfs(root->right, i + 1, res);
-        dfs(root->left, i + 1, res);
+
+        helper(root->right, res, i + 1);
+        helper(root->left, res, i + 1);
     }
     vector<int> rightSideView(TreeNode* root) {
         vector<int> res;
-        int i = 0;
-        dfs(root, i, res);
+        helper(root, res, 1);
         return res;
     }
 };
