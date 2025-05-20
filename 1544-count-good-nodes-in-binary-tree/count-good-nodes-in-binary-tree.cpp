@@ -12,19 +12,23 @@
  */
 class Solution {
 public:
-    void preorder(TreeNode* root, int& cnt, int maxi) {
+    void preorder(TreeNode* root, int maxi, int& cnt) {
+
         if (root == NULL)
             return;
-        if (root->val >= maxi)
+
+        if (root->val >= maxi) {
             cnt++;
-        maxi = max(maxi, root->val);
-        preorder(root->left, cnt, maxi);
-        preorder(root->right, cnt, maxi);
+            maxi = root->val;
+        }
+
+        preorder(root->left, maxi, cnt);
+        preorder(root->right, maxi, cnt);
     }
     int goodNodes(TreeNode* root) {
         int cnt = 0;
-        int maxi = INT_MIN;
-        preorder(root, cnt, maxi);
+        int maxi = root->val;
+        preorder(root, maxi, cnt);
         return cnt;
     }
 };
