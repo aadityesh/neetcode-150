@@ -12,13 +12,38 @@
  */
 class Solution {
 public:
-    bool dfs(TreeNode* root, long mini, long maxi) {
+    void findMaxUsingPreorder(TreeNode* root, long& maxi, long& mini) {
+        if (root == NULL)
+            return;
+
+        long val = root->val;
+        maxi = max(val, maxi);
+        mini = min(val, mini);
+
+        findMaxUsingPreorder(root->left, maxi, mini);
+        findMaxUsingPreorder(root->right, maxi, mini);
+    }
+
+    bool isValidBST(TreeNode* root) {
+
         if (root == NULL)
             return true;
-        if (root->val <= mini || root->val >= maxi)
+
+        long maxi = LONG_MIN;
+        long mini = LONG_MAX;
+        findMaxUsingPreorder(root->left, maxi, mini);
+        long lmax = maxi;
+
+        maxi = LONG_MIN;
+        mini = LONG_MAX;
+        findMaxUsingPreorder(root->right, maxi, mini);
+        long rmax = mini;
+        // cout << "L: " << lmax << " Ro: " << root->val << " R: " << rmax <<
+        // endl;
+
+        if ((lmax >= root->val || root->val >= rmax))
             return false;
-        return dfs(root->left, mini, root->val) &&
-               dfs(root->right, root->val, maxi);
+
+        return isValidBST(root->left) && isValidBST(root->right);
     }
-    bool isValidBST(TreeNode* root) { return dfs(root, LONG_MIN, LONG_MAX); }
 };
