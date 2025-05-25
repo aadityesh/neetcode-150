@@ -10,9 +10,9 @@
  * right(right) {}
  * };
  */
-class Solution {
-public:
-    void findMaxUsingPreorder(TreeNode* root, long& maxi, long& mini) {
+
+/*
+     void findMaxUsingPreorder(TreeNode* root, long& maxi, long& mini) {
         if (root == NULL)
             return;
 
@@ -45,5 +45,28 @@ public:
             return false;
 
         return isValidBST(root->left) && isValidBST(root->right);
+    }
+*/
+
+class Solution {
+public:
+    bool check(TreeNode* root, long& left, long& right) {
+
+        if (root == NULL)
+            return true;
+        if (left >= root->val || root->val >= right)
+            return false;
+
+        long rootValue = root->val;
+
+        return check(root->left, left, rootValue) &&
+               check(root->right, rootValue, right);
+    }
+
+    bool isValidBST(TreeNode* root) {
+        long left = LONG_MIN;
+        long right = LONG_MAX;
+
+        return check(root, left, right);
     }
 };
