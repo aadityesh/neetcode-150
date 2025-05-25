@@ -48,6 +48,9 @@ public:
         if(root == NULL) return NULL;
 
         int curr = root->val;
+        if(p->val < curr && curr < q->val) {
+            return root;
+        }
         if(curr < p->val && curr < q->val) {
             return lowestCommonAncestor(root->right, p, q);
         }
